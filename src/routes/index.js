@@ -2,6 +2,7 @@ import Cart from '@p/cart';
 import Order from '@p/order';
 import Result from '@p/result';
 import Page404 from '@p/page404';
+import Post from '@p/post';
 
 let routes = [
   {
@@ -23,6 +24,12 @@ let routes = [
     exact: true
   },
   {
+    name: 'post',
+    path: '/post/:id',
+    component: Post,
+    exact: true
+  },
+  {
     path: '**',
     component: Page404
   }
@@ -34,5 +41,20 @@ routes.forEach((route) => {
   route.hasOwnProperty('name') ? routesMap[route.name] = route.path : '';
 });
 
+let urlBuilder = (name, params) => {
+  if(!routesMap.hasOwnProperty(name)) {
+    return null;
+  }
+
+  let url = routesMap[name];
+
+  for(let key in params) {
+    url = url.replace(':' + key, params[key]);
+  }
+
+  return url;
+};
+
 export default routes;
 export {routesMap};
+export {urlBuilder};
