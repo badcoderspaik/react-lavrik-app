@@ -6,7 +6,7 @@ const autoprefixer = require('autoprefixer');
  * @param loadMap {boolean} булево значение, от которого зависит, будет или нет генериться карта кода
  * @returns {{module: {rules: [null]}}} конфиг лоадера
  */
-module.exports = function (loadMap) {
+module.exports = function (loadMap = true) {
   return {
 
     module: {

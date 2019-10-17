@@ -1,3 +1,4 @@
+/* eslint-disable */
 const path = require('path');
 const merge = require('webpack-merge'); // объединяет массивы и объекты конфигураций из нескольких файлов-модулей
 const pug = require('./webpack/loaders/pug'); // модуль обработки pug-файлов
@@ -29,52 +30,79 @@ module.exports = (env, args) => {
 
   // точки входа
   const config = merge({
-        entry: {
-          'index': './src/js/index.js',
-        },
+      entry: {
+        'index': './src/js/index.js',
+      },
 
-        output: { // точка выхода
-          filename: '[name].js', // имя выходного js-файла
-          path: path.resolve(__dirname, 'dist'), // директория, в которой будет лежать выходной файл
-        },
+      output: { // точка выхода
+        filename: '[name].js', // имя выходного js-файла
+        path: path.resolve(__dirname, 'dist'), // директория, в которой будет лежать выходной файл
+      },
 
-        module: { // модули, обрабатывающие файлы с указанным расширением
-          rules: [
-
-            {
-              test: /\.js$/,
-              exclude: /node_modules/,
-              loader: 'babel-loader'
-            },
-          ]
+      resolve: {
+        extensions: ['.js', '.jsx'],
+        alias: {
+          '@': path.resolve(__dirname, 'src'),
+          '@c': path.resolve(__dirname, 'src/components'),
+          '@p': path.resolve(__dirname, 'src/pages'),
+          '@s': path.resolve(__dirname, 'src/store'),
+          '@r': path.resolve(__dirname, 'src/routes')
         }
       },
-      cleanWebpackPlugin(),
-      miniCssExtractPlugin(),
-      optimization(),
-      watch(),
-      font(),
-      image(),
-      video(),
-      pug(isDev),
-      sass(isDev),
-      copyWebpackPlugin([{from: 'src/favicons', to: 'favicons'}]),
-      htmlWebpackPlugin({filename: 'index.html', template: 'src/pages/index.pug', inject: false}),
-      styleLintPlugin(),
-      env.browserSync === 'open' ? browserSync() : {},
-      jquery()
+
+      devServer: {
+        historyApiFallback: true
+      },
+
+      module: { // модули, обрабатывающие файлы с указанным расширением
+        rules: [
+
+          {
+            test: /\.(js|jsx)$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ['@babel/preset-env'],
+                plugins: [
+                  '@babel/plugin-transform-react-jsx',
+                  '@babel/plugin-transform-runtime',
+                  ['@babel/plugin-proposal-decorators', { 'legacy': true }],
+                  ['@babel/plugin-proposal-class-properties', { 'loose': true }]
+                ]
+              }
+            }
+          },
+        ]
+      }
+    },
+    cleanWebpackPlugin(),
+    miniCssExtractPlugin(),
+    optimization(),
+    watch(),
+    font(),
+    image(),
+    // video(),
+    pug(isDev),
+    sass(isDev),
+    css(),
+    // copyWebpackPlugin([{from: 'src/favicons', to: 'favicons'}]),
+    htmlWebpackPlugin({ filename: 'index.html', template: 'src/pages/index.pug', inject: false }),
+    styleLintPlugin(),
+    env.browserSync === 'open' ? browserSync() : {},
+    // jquery()
   );
 
   if (isDev) { // в режиме разработки
     return merge(
-        config,
-        sourceMap()
+      config,
+      sourceMap()
     );
   }
 
   if (!isDev) { // в режиме продакшн
     return merge(
-        config
+      config
     );
   }
 };

@@ -23,7 +23,10 @@ module.exports = function (loadMap) {
             {
               loader: 'css-loader',
               options: {
-                sourceMap: loadMap ? true : false
+                sourceMap: loadMap ? true : false,
+                importLoaders: 1,
+                modules: true,
+                localIdentName: '[local]'
               }
             },
             {
