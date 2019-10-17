@@ -1,6 +1,6 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import routes from '@r/';
 
 export default @observer class extends React.Component {
@@ -18,7 +18,9 @@ export default @observer class extends React.Component {
     return (
       <Router>
         <div className='container-fluid'>
-          {comps}
+          <Switch>
+            {comps}
+          </Switch>
         </div>
       </Router>
     );

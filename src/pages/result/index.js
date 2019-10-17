@@ -1,6 +1,8 @@
 import React from 'react';
 import cartModel from '@s/cart';
 import {Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import {routesMap} from '../../routes';
 
 export default class extends React.Component {
   render() {
@@ -8,19 +10,19 @@ export default class extends React.Component {
       <div>
         Result
         <div>Total: {cartModel.total}</div>
-        <Button
-          variant='warning'
-          onClick={() => {}}
+        <Link
+          to={routesMap.order}
+          className='btn btn-warning'
         >
           Back to order
-        </Button>
+        </Link>
         &nbsp;
-        <Button
-          variant='success'
-          onClick={() => {}}
+        <Link
+          to={routesMap.index}
+          className='btn btn-success'
         >
           Back to cart
-        </Button>
+        </Link>
       </div>
     );
   }

@@ -1,17 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Form, Button, Modal} from 'react-bootstrap';
 import formData from '@s/formData';
 import {observer} from 'mobx-react';
-import router from '../../store/router';
+import routes from '@r/';
+import {routesMap} from '@r/';
+import {Link} from 'react-router-dom';
 
 export default @observer class extends React.Component {
-  static propTypes = {
-    // data: PropTypes.object.isRequired,
-    // onSend: PropTypes.func.isRequired,
-    // onBack: PropTypes.func.isRequired,
-    // onChange: PropTypes.func.isRequired
-  };
 
   state = {
     showModal: false
@@ -27,15 +22,10 @@ export default @observer class extends React.Component {
 
   confirm = () => {
     this.hide();
-    this.onApply();
-  };
-
-  onBack = () => {
-    router.moveTo('cart');
+    this.props.history.push(routesMap.result);
   };
 
   onApply = () => {
-    router.moveTo('result');
   };
 
   render() {
@@ -70,12 +60,9 @@ export default @observer class extends React.Component {
           {formFields}
         </Form>
 
-        <Button
-          variant='warning'
-          onClick={this.onBack}
-        >
+        <Link className='btn btn-warning' to={routesMap.index}>
           Back to cart
-        </Button>
+        </Link>
         &nbsp;
         <Button
           variant='success'
@@ -94,7 +81,7 @@ export default @observer class extends React.Component {
             <Button variant="secondary" onClick={this.hide}>
               Ooops
             </Button>
-            <Button variant="primary" onClick={this.confirm}>
+            <Button variant='primary' onClick={this.confirm}>
               All right
             </Button>
           </Modal.Footer>

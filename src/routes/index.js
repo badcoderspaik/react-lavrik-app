@@ -23,17 +23,15 @@ let routes = [
     exact: true
   },
   {
-    name: '404',
-    path: '/404',
-    component: Page404,
-    exact: true
+    path: '**',
+    component: Page404
   }
 ];
 
 let routesMap = {};
 
-routes.map((route) => {
-  routesMap[route.name] = route.path;
+routes.forEach((route) => {
+  route.hasOwnProperty('name') ? routesMap[route.name] = route.path : '';
 });
 
 export default routes;
