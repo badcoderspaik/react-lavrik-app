@@ -1,13 +1,21 @@
 import Cart from '@p/cart';
 import Order from '@p/order';
 import Result from '@p/result';
+import Home from '@p/home';
 import Page404 from '@p/page404';
 import Post from '@p/post';
+import Product from '@p/product';
 
 let routes = [
   {
     name: 'index',
     path: '/',
+    component: Home,
+    exact: true
+  },
+  {
+    name: 'cart',
+    path: '/cart',
     component: Cart,
     exact: true
   },
@@ -27,6 +35,12 @@ let routes = [
     name: 'post',
     path: '/post/:id',
     component: Post,
+    exact: true
+  },
+  {
+    name: 'product',
+    path: '/products/:id',
+    component: Product,
     exact: true
   },
   {

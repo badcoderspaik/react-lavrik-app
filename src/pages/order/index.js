@@ -5,8 +5,11 @@ import {observer} from 'mobx-react';
 import routes from '@r/';
 import {routesMap} from '@r/';
 import {Link} from 'react-router-dom';
+import Sidebar from '@c/sidebar';
 
-export default @observer class extends React.Component {
+export default @observer
+
+class extends React.Component {
 
   state = {
     showModal: false
@@ -53,40 +56,42 @@ export default @observer class extends React.Component {
     }
 
     return (
-      <div>
-        <h2>Order</h2>
-        <hr/>
-        <Form>
-          {formFields}
-        </Form>
+      <div className='wrapper'>
+        <Sidebar/>
+        <div>
+          <h2>Order</h2>
+          <hr/>
+          <Form>
+            {formFields}
+          </Form>
 
-        <Link className='btn btn-warning' to={routesMap.index}>
-          Back to cart
-        </Link>
-        &nbsp;
-        <Button
-          variant='success'
-          disabled={!disable}
-          onClick={this.show}
-        >
-          Apply order
-        </Button>
+          <Link className='btn btn-warning' to={routesMap.index}>
+            Home
+          </Link>
+          &nbsp;
+          <Button
+            variant='success'
+            disabled={!disable}
+            onClick={this.show}
+          >
+            Apply order
+          </Button>
 
-        <Modal show={this.state.showModal} backdrop='static' onHide={this.hide}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.hide}>
-              Ooops
-            </Button>
-            <Button variant='primary' onClick={this.confirm}>
-              All right
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
+          <Modal show={this.state.showModal} backdrop='static' onHide={this.hide}>
+            <Modal.Header closeButton>
+              <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={this.hide}>
+                Ooops
+              </Button>
+              <Button variant='primary' onClick={this.confirm}>
+                All right
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </div>
       </div>
     );
   }
