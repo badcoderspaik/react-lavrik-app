@@ -9,13 +9,6 @@ export default class extends React.Component {
     }
   }
 
-  // static propTypes = {
-  //   min: PropTypes.number.isRequired,
-  //   max: PropTypes.number.isRequired,
-  //   cnt: PropTypes.number.isRequired,
-  //   onChange: PropTypes.func
-  // }
-
   lazyInput = React.createRef();
 
   increase = () => {

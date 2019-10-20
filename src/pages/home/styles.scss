@@ -1,23 +1,5 @@
-.wrapper {
-  display: flex;
-}
-
-.product {
-  width: 70%;
-
-  &__list {
-    display: flex;
-    justify-content: space-between;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  &__item {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-  }
+.col {
+  margin-bottom: 30px;
 }
 
 

@@ -1,22 +1,15 @@
 import React from 'react';
 import cartModel from '@s/cart';
-import {Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import {routesMap, urlBuilder} from '../../routes';
+import {routesMap} from '../../routes';
 
 export default class extends React.Component {
   render() {
-    let postsTmp = [1, 2, 3];
-
-    let links = postsTmp.map((post) => {
-      return <div key={post}>
-        <Link to={urlBuilder('post', {id: post})}>Post {post}</Link>
-      </div>
-    });
 
     return (
       <div>
-        Result
+        <h1>Result</h1>
+        <hr/>
         <div>Total: {cartModel.total}</div>
         <Link
           to={routesMap.order}
@@ -31,7 +24,6 @@ export default class extends React.Component {
         >
           Back to cart
         </Link>
-        {links}
       </div>
     );
   }

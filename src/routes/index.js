@@ -3,7 +3,6 @@ import Order from '@p/order';
 import Result from '@p/result';
 import Home from '@p/home';
 import Page404 from '@p/page404';
-import Post from '@p/post';
 import Product from '@p/product';
 
 let routes = [
@@ -29,12 +28,6 @@ let routes = [
     name: 'result',
     path: '/result',
     component: Result,
-    exact: true
-  },
-  {
-    name: 'post',
-    path: '/post/:id',
-    component: Post,
     exact: true
   },
   {

@@ -1,15 +1,15 @@
 import React from 'react';
-import Sidebar from '@c/sidebar';
 import {Button} from 'react-bootstrap';
 import MinMax from '@c/minmax';
 import cartModel from '@s/cart';
 import {Link} from 'react-router-dom';
 import {routesMap} from '@r/';
 import {observer} from 'mobx-react';
+import styles from './styles.scss';
 
-export default @observer
 
-class extends React.Component {
+
+export default @observer class extends React.Component {
 
   render() {
     let productList = cartModel.productsDetailed.map((product, i) => {
@@ -33,7 +33,7 @@ class extends React.Component {
               onClick={() => cartModel.remove(product.id)}
               title='Удалить строку'
             >
-              X
+              &#10008;
             </Button>
           </td>
         </tr>
@@ -42,29 +42,25 @@ class extends React.Component {
 
     return (
       <div>
-        <div className='wrapper'>
-          <Sidebar/>
-          <div>
-            <h2>Cart</h2>
-            <table className='table table-bordered data'>
-              <tbody>
-              <tr>
-                <th>title</th>
-                <th>price</th>
-                <th>count</th>
-                <th>total</th>
-                <th>remove</th>
-              </tr>
-              {productList}
-              <tr>
-                <td><strong>Total amount</strong></td>
-                <td>{cartModel.total}</td>
-              </tr>
-              </tbody>
-            </table>
-            <Link to={routesMap.order} className='btn btn-primary'>Send</Link>
-          </div>
-        </div>
+        <h2>Cart</h2>
+        <hr/>
+        <table className={`table table-bordered ${styles.table}`}>
+          <tbody>
+          <tr>
+            <th>title</th>
+            <th>price</th>
+            <th>count</th>
+            <th>total</th>
+            <th>remove</th>
+          </tr>
+          {productList}
+          <tr>
+            <td><strong>Total amount</strong></td>
+            <td>{cartModel.total}</td>
+          </tr>
+          </tbody>
+        </table>
+        <Link to={routesMap.order} className='btn btn-primary'>Send</Link>
       </div>
     );
   }

@@ -1,13 +1,13 @@
 import React from 'react';
-import Sidebar from '@c/sidebar';
 import styles from './styles.scss';
-import Product from '@c/product';
 import productModel from '@s/products';
 import cartModel from '@s/cart';
 import {Card, Button} from 'react-bootstrap';
 import {urlBuilder} from '../../routes';
 import {Link} from 'react-router-dom';
 import {observer} from 'mobx-react';
+
+
 
 export default @observer class extends React.Component {
 
@@ -26,7 +26,7 @@ export default @observer class extends React.Component {
       }
 
       return (
-        <div key={product.id} className='col col-4'>
+        <div key={product.id} className={`col col-4 ${styles.col}`}>
           <Card>
             <Card.Body>
               <Card.Title>{product.title}</Card.Title>
@@ -43,10 +43,10 @@ export default @observer class extends React.Component {
     });
 
     return (
-      <div className={styles.wrapper}>
-        <Sidebar/>
-        <div className={styles.product}>
-          <h1>Products</h1>
+      <div>
+        <h1>Products</h1>
+        <hr/>
+        <div className='row'>
           {products}
         </div>
       </div>
