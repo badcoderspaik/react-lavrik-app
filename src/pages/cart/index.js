@@ -12,7 +12,7 @@ export default @observer
 class extends React.Component {
 
   render() {
-    let productList = cartModel.products.map((product, i) => {
+    let productList = cartModel.productsDetailed.map((product, i) => {
       return (
         <tr key={product.id}>
           <td>{product.title}</td>
@@ -22,7 +22,7 @@ class extends React.Component {
               min={1}
               max={product.ost}
               cnt={product.current}
-              onChange={(cnt) => cartModel.change(i, cnt)}
+              onChange={(cnt) => cartModel.change(product.id, cnt)}
             />
 
           </td>
@@ -30,7 +30,7 @@ class extends React.Component {
           <td>
             <Button
               variant='danger'
-              onClick={() => cartModel.remove(i)}
+              onClick={() => cartModel.remove(product.id)}
               title='Удалить строку'
             >
               X

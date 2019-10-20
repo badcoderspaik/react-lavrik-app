@@ -1,18 +1,45 @@
 import {observable, computed, action} from 'mobx';
+import productsStore from './products';
 
 class Cart {
-  @observable products = getProducts();
+  @observable products = [];
+
+  @computed get productsDetailed() {
+    return this.products.map((pr) => {
+      let product = productsStore.getById(pr.id);
+      return {...product, current: pr.current};
+    });
+  }
+
+  @computed get inCart() {
+    return (id) => this.products.some((product) => product.id === id);
+  }
 
   @computed get total() {
-    return this.products.reduce((t, pr) => t + pr.price * pr.current, 0);
+    return this.productsDetailed.reduce((t, pr) => {
+      let product = productsStore.getById(pr.id);
+      return t + pr.price * pr.current;
+    }, 0);
   }
 
-  @action change(i, cnt) {
-    this.products[i].current = cnt;
+  @action change(id, cnt) {
+    let index = this.products.findIndex((pr) => pr.id === id);
+
+    if (index !== -1) {
+      this.products[index].current = cnt;
+    }
   }
 
-  @action remove(i) {
-    this.products.splice(i, 1);
+  @action remove(id) {
+    let index = this.products.findIndex((pr) => pr.id === id);
+
+    if (index !== -1) {
+      this.products.splice(index, 1);
+    }
+  }
+
+  @action add(id) {
+    this.products.push({ id, current: 1 });
   }
 }
 
@@ -20,53 +47,44 @@ function getProducts() {
   return [
     {
       id: 100,
-      title: 'iphone',
-      price: 1000,
-      ost: 10,
       current: 1
     },
     {
       id: 101,
-      title: 'samsung',
-      price: 1000,
-      ost: 100,
       current: 2
     },
     {
       id: 102,
-      title: 'Nokia',
-      price: 1000,
-      ost: 10,
-      current: 1
+      current: 3
     },
-    {
-      id: 103,
-      title: 'gnusmas',
-      price: 1000,
-      ost: 100,
-      current: 1
-    },
-    {
-      id: 104,
-      title: 'Motorola',
-      price: 1000,
-      ost: 67,
-      current: 1
-    },
-    {
-      id: 105,
-      title: 'LG',
-      price: 1000,
-      ost: 5,
-      current: 1
-    },
-    {
-      id: 106,
-      title: 'huawei',
-      price: 1000,
-      ost: 1,
-      current: 1
-    }
+    // {
+    //   id: 103,
+    //   title: 'gnusmas',
+    //   price: 1000,
+    //   ost: 100,
+    //   current: 1
+    // },
+    // {
+    //   id: 104,
+    //   title: 'Motorola',
+    //   price: 1000,
+    //   ost: 67,
+    //   current: 1
+    // },
+    // {
+    //   id: 105,
+    //   title: 'LG',
+    //   price: 1000,
+    //   ost: 5,
+    //   current: 1
+    // },
+    // {
+    //   id: 106,
+    //   title: 'huawei',
+    //   price: 1000,
+    //   ost: 1,
+    //   current: 1
+    // }
   ];
 }
 
