@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import AppLazyInput from '../lazy/lazy';
 import {Button} from 'react-bootstrap';
 
-export default class extends React.Component {
+class MinMax extends React.Component {
   static defaultProps = {
     onChange: function (cnt) {
     }
@@ -30,7 +29,6 @@ export default class extends React.Component {
     let realCnt = this.set(isNaN(cnt) ? this.props.min : cnt);
 
     if (realCnt.toString() !== e.target.value) {
-      console.log('aslkdjfls;akdjflsafdkj');
       this.lazyInput.current.setValue(realCnt);
     }
   }
@@ -50,3 +48,5 @@ export default class extends React.Component {
     );
   }
 }
+
+export default MinMax;

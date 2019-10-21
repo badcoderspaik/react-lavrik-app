@@ -1,10 +1,12 @@
 import React from 'react';
-import cartModel from '@s/cart';
 import {Link} from 'react-router-dom';
 import {routesMap} from '../../routes';
+import {inject} from 'mobx-react';
 
-export default class extends React.Component {
+@inject('stores') export default class extends React.Component {
+
   render() {
+    let cartModel = this.props.stores.cart;
 
     return (
       <div>

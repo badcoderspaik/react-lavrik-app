@@ -1,22 +1,27 @@
 import React from 'react';
 import {routesMap} from '../../routes';
-import {Link} from 'react-router-dom';
-import productModel from '@s/products';
+import {inject} from 'mobx-react';
+import Product from '@c/product';
+import E404 from '@c/404';
 
-export default class extends React.Component {
+@inject('stores') export default class extends React.Component {
 
   render() {
     let id = this.props.match.params.id;
+    let productModel = this.props.stores.products;
     let product = productModel.getById(id);
-    return (
-      <div>
-        <h1>{product.title}</h1>
-        <hr/>
-        <div>
-          <strong>Price: {product.price}</strong>
-        </div>
-        <Link to={routesMap.index}>back to list</Link>
-      </div>
-    );
+
+    if (product === null) {
+      return <E404/>
+    } else {
+      return (
+        <Product
+          id={product.id}
+          title={product.title}
+          price={product.price}
+          homeUrl={routesMap.index}
+        />
+      );
+    }
   }
 }

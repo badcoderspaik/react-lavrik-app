@@ -1,17 +1,16 @@
 import React from 'react';
 import {Button} from 'react-bootstrap';
 import MinMax from '@c/minmax';
-import cartModel from '@s/cart';
 import {Link} from 'react-router-dom';
 import {routesMap} from '@r/';
-import {observer} from 'mobx-react';
+import withStore from '@/hocs/WithStore';
 import styles from './styles.scss';
+import LinkButton from '@c/links/button';
 
-
-
-export default @observer class extends React.Component {
+class Cart extends React.Component {
 
   render() {
+    let cartModel = this.props.stores.cart;
     let productList = cartModel.productsDetailed.map((product, i) => {
       return (
         <tr key={product.id}>
@@ -61,7 +60,12 @@ export default @observer class extends React.Component {
           </tbody>
         </table>
         <Link to={routesMap.order} className='btn btn-primary'>Send</Link>
+        <LinkButton to={routesMap.order} className='btn btn-primary'>
+          Send
+        </LinkButton>
       </div>
     );
   }
 }
+
+export default withStore(Cart);

@@ -1,9 +1,10 @@
 import React from 'react';
-import {observer} from 'mobx-react';
+import {observer, Provider} from 'mobx-react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import routes from '@r/';
 import {routesMap} from '@r/';
 import Sidebar from '@c/sidebar';
+import stores from '@s/';
 
 export default @observer class extends React.Component {
 
@@ -18,22 +19,24 @@ export default @observer class extends React.Component {
     });
 
     return (
-      <Router>
-        <div className='container'>
-          header
-          <hr/>
-          <div className="row">
-            <div className="col col-3">
-              <Sidebar/>
-            </div>
-            <div className="col col-9">
-              <Switch>
-                {routerComponents}
-              </Switch>
+      <Provider stores={stores}>
+        <Router>
+          <div className='container'>
+            <h3>Products in cart: {stores.cart.count}</h3>
+            <hr/>
+            <div className="row">
+              <div className="col col-3">
+                <Sidebar/>
+              </div>
+              <div className="col col-9">
+                <Switch>
+                  {routerComponents}
+                </Switch>
+              </div>
             </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </Provider>
     );
   }
 }

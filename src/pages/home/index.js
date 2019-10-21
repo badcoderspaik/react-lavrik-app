@@ -1,19 +1,17 @@
 import React from 'react';
 import styles from './styles.scss';
-import productModel from '@s/products';
-import cartModel from '@s/cart';
 import {Card, Button} from 'react-bootstrap';
 import {urlBuilder} from '../../routes';
 import {Link} from 'react-router-dom';
-import {observer} from 'mobx-react';
+import withStore from '@/hocs/WithStore';
 
-
-
-export default @observer class extends React.Component {
+class Home extends React.Component {
 
   render() {
+    let productModel = this.props.stores.products;
+    let cartModel = this.props.stores.cart;
     let products = productModel.items.map((product, index) => {
-      let btn;
+    let btn;
 
       if (cartModel.inCart(product.id)) {
         btn = <Button variant='danger' onClick={() => cartModel.remove(product.id)}>
@@ -53,3 +51,5 @@ export default @observer class extends React.Component {
     );
   }
 }
+
+export default withStore(Home);

@@ -1,7 +1,11 @@
 import {observable, computed, action} from 'mobx';
 
-class FormData {
+export default class FormData {
   @observable data = getFormData();
+
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+  }
 
   @action change(name, value) {
     let field = this.data[name];
@@ -10,7 +14,7 @@ class FormData {
   }
 }
 
-export default new FormData();
+
 
 function getFormData() {
   return {

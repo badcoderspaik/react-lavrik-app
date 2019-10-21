@@ -1,12 +1,15 @@
 import {observable, computed, action} from 'mobx';
-import productsStore from './products';
 
-class Cart {
+export default class {
   @observable products = [];
+
+  constructor(rootStore) {
+    this.rootStore = rootStore;
+  }
 
   @computed get productsDetailed() {
     return this.products.map((pr) => {
-      let product = productsStore.getById(pr.id);
+      let product = this.rootStore.products.getById(pr.id);
       return {...product, current: pr.current};
     });
   }
@@ -17,9 +20,13 @@ class Cart {
 
   @computed get total() {
     return this.productsDetailed.reduce((t, pr) => {
-      let product = productsStore.getById(pr.id);
+      let product = this.rootStore.products.getById(pr.id);
       return t + pr.price * pr.current;
     }, 0);
+  }
+
+  @computed get count() {
+    return this.products.reduce((t, pr) => t + pr.current, 0);
   }
 
   @action change(id, cnt) {
@@ -42,51 +49,3 @@ class Cart {
     this.products.push({ id, current: 1 });
   }
 }
-
-function getProducts() {
-  return [
-    {
-      id: 100,
-      current: 1
-    },
-    {
-      id: 101,
-      current: 2
-    },
-    {
-      id: 102,
-      current: 3
-    },
-    // {
-    //   id: 103,
-    //   title: 'gnusmas',
-    //   price: 1000,
-    //   ost: 100,
-    //   current: 1
-    // },
-    // {
-    //   id: 104,
-    //   title: 'Motorola',
-    //   price: 1000,
-    //   ost: 67,
-    //   current: 1
-    // },
-    // {
-    //   id: 105,
-    //   title: 'LG',
-    //   price: 1000,
-    //   ost: 5,
-    //   current: 1
-    // },
-    // {
-    //   id: 106,
-    //   title: 'huawei',
-    //   price: 1000,
-    //   ost: 1,
-    //   current: 1
-    // }
-  ];
-}
-
-export default new Cart();
-

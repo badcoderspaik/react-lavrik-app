@@ -1,11 +1,10 @@
 import React from 'react';
 import {Form, Button, Modal} from 'react-bootstrap';
-import formData from '@s/formData';
-import {observer} from 'mobx-react';
+import withStore from '@/hocs/WithStore';
 import {routesMap} from '@r/';
 import {Link} from 'react-router-dom';
 
-export default @observer class extends React.Component {
+class Order extends React.Component {
 
   state = {
     showModal: false
@@ -27,6 +26,7 @@ export default @observer class extends React.Component {
   render() {
     let formFields = [];
     let disable = true;
+    let formData = this.props.stores.order;
 
     for (let name in formData.data) {
       let field = formData.data[name];
@@ -87,3 +87,5 @@ export default @observer class extends React.Component {
     );
   }
 }
+
+export default withStore(Order);
