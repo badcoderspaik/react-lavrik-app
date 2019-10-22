@@ -1,12 +1,12 @@
 import React from 'react';
-import {observer, Provider} from 'mobx-react';
+import withStore from '@/hocs/WithStore';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import routes from '@r/';
 import {routesMap} from '@r/';
 import Sidebar from '@c/sidebar';
 import stores from '@s/';
 
-export default @observer class extends React.Component {
+class App extends React.Component {
 
   render() {
     let routerComponents = routes.map((route) => {
@@ -19,24 +19,31 @@ export default @observer class extends React.Component {
     });
 
     return (
-      <Provider stores={stores}>
-        <Router>
-          <div className='container'>
-            <h3>Products in cart: {stores.cart.count}</h3>
-            <hr/>
-            <div className="row">
-              <div className="col col-3">
-                <Sidebar/>
-              </div>
-              <div className="col col-9">
-                <Switch>
-                  {routerComponents}
-                </Switch>
-              </div>
+      <Router>
+        <div className='container'>
+          <div className='row' style={{justifyContent: 'space-between'}}>
+            <div className='col col-6 alert-warning'>
+              <h3>Header</h3>
+            </div>
+            <div className='col col-3 alert-info'>
+              <h3>Products in cart: {stores.cart.count}</h3>
             </div>
           </div>
-        </Router>
-      </Provider>
+          <hr/>
+          <div className="row">
+            <div className="col col-3">
+              <Sidebar/>
+            </div>
+            <div className="col col-9">
+              <Switch>
+                {routerComponents}
+              </Switch>
+            </div>
+          </div>
+        </div>
+      </Router>
     );
   }
 }
+
+export default withStore(App);
